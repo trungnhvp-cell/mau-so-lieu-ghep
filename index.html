@@ -1,0 +1,177 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Ôn tập Mẫu số liệu ghép nhóm – Toán 11, 12</title>
+<style>
+:root{--bg:#f4f7fb;--c:#fff;--t:#17202e;--m:#5a6577;--p:#2563eb;--ps:#e8f0ff;--ok:#15803d;--oks:#e3f6e9;--bad:#b91c1c;--bads:#fdeaea;--b:#d9e1ec;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1520;--c:#18202e;--t:#e8edf5;--m:#9aa6b8;--p:#6ea1ff;--ps:#1d2b47;--ok:#4ade80;--oks:#14301f;--bad:#f87171;--bads:#3a1c1c;--b:#2a3547}}
+:root[data-theme="dark"]{--bg:#0f1520;--c:#18202e;--t:#e8edf5;--m:#9aa6b8;--p:#6ea1ff;--ps:#1d2b47;--ok:#4ade80;--oks:#14301f;--bad:#f87171;--bads:#3a1c1c;--b:#2a3547}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--t);font:16px/1.6 system-ui,"Segoe UI",Roboto,sans-serif}
+header{background:linear-gradient(135deg,#1d4ed8,#7c3aed);color:#fff;padding:18px 14px}
+header h1{margin:0;font-size:1.3rem}header p{margin:4px 0 0;opacity:.9;font-size:.9rem}
+main{max-width:900px;margin:0 auto;padding:12px}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0}
+nav button{flex:none;border:1px solid var(--b);background:var(--c);color:var(--t);padding:9px 14px;border-radius:20px;font:inherit;cursor:pointer}
+nav button.on{background:var(--p);color:#fff;border-color:var(--p)}
+.card{background:var(--c);border:1px solid var(--b);border-radius:14px;padding:14px;margin:10px 0}
+h2{margin:.2em 0 .4em;font-size:1.2rem}h3{margin:.8em 0 .3em;font-size:1.05rem;color:var(--p)}
+.f{background:var(--ps);border-left:4px solid var(--p);padding:8px 12px;border-radius:8px;margin:8px 0;font-family:Cambria,"Times New Roman",serif;font-size:1.05rem;overflow-x:auto}
+.tw{overflow-x:auto;margin:8px 0}table{border-collapse:collapse;min-width:100%;font-size:.92rem}th,td{border:1px solid var(--b);padding:5px 9px;text-align:center;white-space:nowrap}th{background:var(--ps)}
+button.b,.btn{background:var(--p);color:#fff;border:0;padding:10px 18px;border-radius:10px;font:inherit;cursor:pointer}button.g{background:var(--ps);color:var(--p)}
+input,select,textarea{font:inherit;padding:8px;border:1px solid var(--b);border-radius:8px;background:var(--c);color:var(--t);max-width:100%}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.set{cursor:pointer}.set:hover{border-color:var(--p)}.tag{font-size:.78rem;background:var(--ps);color:var(--p);border-radius:10px;padding:2px 8px}
+.q{border-top:1px solid var(--b);padding:12px 0}.q label{display:block;padding:7px 10px;margin:4px 0;border:1px solid var(--b);border-radius:10px;cursor:pointer}
+.q label:has(input:checked){background:var(--ps);border-color:var(--p)}.ok{background:var(--oks)!important;border-color:var(--ok)!important}.bad{background:var(--bads)!important;border-color:var(--bad)!important}
+.st{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0}.st span.s{flex:1 1 220px}
+.ex{margin-top:8px;padding:8px 12px;border-radius:8px;background:var(--ps);font-size:.93rem}
+#timer{position:sticky;top:env(safe-area-inset-top,0px);background:var(--c);border:1px solid var(--b);border-radius:10px;padding:6px 12px;font-weight:700;z-index:5;display:flex;justify-content:space-between}
+.sc{font-size:2rem;font-weight:800;color:var(--p)}.mut{color:var(--m);font-size:.88rem}.bar{height:10px;background:var(--p);border-radius:5px}
+footer{text-align:center;color:var(--m);font-size:.85rem;padding:18px}
+</style></head><body>
+<header><h1>📊 Mẫu số liệu ghép nhóm</h1><p>Ôn tập Chương III (Toán 11 – Kết nối tri thức) &amp; Chuyên đề (Toán 12) · Các số đặc trưng đo mức độ phân tán</p></header>
+<main>
+<div class="card" id="who"></div>
+<nav id="nav"></nav>
+<div id="view"></div>
+</main>
+<footer>Thầy Nguyễn Hữu Trung · THPT Trần Phú · ĐT/Zalo: 0964848989</footer>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const T=(h,r)=>`<div class=tw><table><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr>${r.map(a=>`<tr>${a.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</table></div>`;
+const M=(q,o,a,e)=>({t:'m',q,o,a,e}),F=(q,s,a,e)=>({t:'f',q,s,a,e}),S=(q,a,e,tol=.011)=>({t:'s',q,a,e,tol});
+const H5=['[5;6)','[6;7)','[7;8)','[8;9)','[9;10)'];
+const tL=T(['Mức lương (triệu đồng)',...H5],[['Số công nhân',5,6,6,5,3]]);
+const tC11=T(['Mức lương',...H5],[['Khu vực A',4,5,5,4,2],['Khu vực B',3,6,5,5,1]]);
+const tHN=T(['Nhiệt độ (°C)','[16,8;19,8)','[19,8;22,8)','[22,8;25,8)','[25,8;28,8)','[28,8;31,8)'],[['Hà Nội',2,3,2,1,4],['Huế',1,2,3,2,4]]);
+const tBH=T(['Quãng đường (km)','[2,7;3,0)','[3,0;3,3)','[3,3;3,6)','[3,6;3,9)','[3,9;4,2)'],[['Số ngày',3,6,5,4,2]]);
+const tTX=T(['Quãng đường (km)','[60;80)','[80;100)','[100;120)','[120;140)','[140;160)'],[['Số ngày',3,9,10,6,2]]);
+const tLop=T(['Điểm','[2,5;4)','[4;5,5)','[5,5;7)','[7;8,5)','[8,5;10]'],[['Lớp 12A',3,16,9,6,4],['Lớp 12B',0,15,13,4,6]]);
+const tPin=T(['Thời gian (giờ)','[5;5,5)','[5,5;6)','[6;6,5)','[6,5;7)','[7;7,5)'],[['Số điện thoại',2,8,15,10,5]]);
+const tNui=T(['Chiều cao (m)','[3500;4000)','[4000;4500)','[4500;5000)','[5000;5500)','[5500;6000)'],[['Số núi',10,7,16,4,3]]);
+const tNuoc=T(['Nước (m³)','[3;6)','[6;9)','[9;12)','[12;15)','[15;18)'],[['Số hộ',24,57,42,29,8]]);
+const tCM=T(['Giờ nắng','[80;98)','[98;116)','[116;134)','[134;152)','[152;170)'],[['Số năm',3,6,3,5,3]]);
+const tCP=T(['Giá đóng cửa (nghìn đồng)','[120;122)','[122;124)','[124;126)','[126;128)','[128;130)'],[['Cổ phiếu A',8,9,12,10,11],['Cổ phiếu B',16,4,3,6,21]]);
+const tHD=T(['Chiều cao (cm)','[0;10)','[10;20)','[20;30)','[30;40)','[40;50]'],[['Phương án A',6,8,12,8,6],['Phương án B',13,6,2,6,13]]);
+const tNT=T(['Giờ nắng tháng 6','[130;160)','[160;190)','[190;220)','[220;250)','[250;280)','[280;310)'],[['Nha Trang',1,1,1,8,7,2],['Quy Nhơn',0,1,2,4,10,3]]);
+const tXD=T(['Đường kính (cm)','[30;32)','[32;34)','[34;36)','[36;38)','[38;40)'],[['Địa điểm A',25,38,20,10,7],['Địa điểm B',22,27,19,18,14]]);
+const tMua=T(['Lượng mưa (mm)','[120;175)','[175;230)','[230;285)','[285;340)'],[['Số năm',10,5,3,1]]);
+const tLua=T(['Năng suất (tấn/ha)','[5,5;5,7)','[5,7;5,9)','[5,9;6,1)','[6,1;6,3)','[6,3;6,5)','[6,5;6,7)'],[['Số thửa',3,4,6,5,5,2]]);
+const tPM=T(['Thời gian (giờ)','[7,2;7,4)','[7,4;7,6)','[7,6;7,8)','[7,8;8,0)'],[['Số máy tính',2,4,7,5]]);
+const tKeo=T(['Chiều cao (m)','[8,5;8,8)','[8,8;9,1)','[9,1;9,4)','[9,4;9,7)','[9,7;10,0)'],[['Số cây keo',20,35,60,55,30]]);
+const SETS=[
+{id:'g1',grp:'Nhóm 1 · Ôn lý thuyết',title:'Kiểm tra kiến thức nền',min:0,desc:'7 câu khái niệm, công thức',qs:[
+M('Khoảng biến thiên của mẫu số liệu ghép nhóm là:',['Hiệu giá trị đại diện lớn nhất và nhỏ nhất','Hiệu đầu mút phải nhóm cuối và đầu mút trái nhóm đầu','Tổng các tần số','Độ dài nhóm có tần số lớn nhất'],1,'R = a<sub>k+1</sub> − a<sub>1</sub>.'),
+M('Khoảng tứ phân vị của mẫu số liệu ghép nhóm là:',['Q₂ − Q₁','Q₃ + Q₁','Q₃ − Q₁','Q₃ − Q₂'],2,'Δ<sub>Q</sub> = Q₃ − Q₁.'),
+M('Công thức phương sai của mẫu số liệu ghép nhóm (cᵢ: giá trị đại diện):',['s² = (1/n)·Σ nᵢ(cᵢ − x̄)²','s² = (1/n)·Σ nᵢcᵢ','s² = (1/n)·Σ nᵢ(cᵢ − x̄)','s² = x̄ − Σcᵢ²'],0,'s² = (1/n)Σ nᵢ(cᵢ−x̄)² = (1/n)Σ nᵢcᵢ² − x̄².'),
+F('Xét các phát biểu về mẫu số liệu ghép nhóm:',['Độ lệch chuẩn bằng căn bậc hai của phương sai','Phương sai càng lớn thì dữ liệu càng tập trung quanh số trung bình','Giá trị đại diện của nhóm [a;b) là (a+b)/2','Khoảng biến thiên không phụ thuộc vào tần số'],[1,0,1,1],'Phương sai lớn ⇒ dữ liệu phân tán nhiều.'),
+M('Nhóm chứa tứ phân vị thứ nhất Q₁ là:',['Nhóm có tần số lớn nhất','Nhóm đầu tiên có tần số tích lũy ≥ n/2','Nhóm cuối cùng','Nhóm đầu tiên có tần số tích lũy ≥ n/4'],3,'Nhóm chứa Q₁: tần số tích lũy đầu tiên ≥ n/4.'),
+M('Hai mẫu số liệu cùng đơn vị, mẫu nào đồng đều hơn?',['Mẫu có độ lệch chuẩn lớn hơn','Mẫu có số trung bình lớn hơn','Mẫu có độ lệch chuẩn nhỏ hơn','Mẫu có nhiều nhóm hơn'],2,'Độ lệch chuẩn nhỏ ⇒ ít phân tán ⇒ đồng đều hơn.'),
+S('Giá trị đại diện của nhóm [16,8; 19,8) (nhiệt độ, °C) là bao nhiêu?',18.3,'(16,8+19,8)/2 = 18,3.')]},
+{id:'l1',grp:'Nhóm 2 · Củng cố',title:'Mức 1 – Nhận biết (4 đáp án)',min:0,desc:'3 câu trắc nghiệm cơ bản',qs:[
+M('Cho bảng mức lương khởi điểm:'+tL+'Khoảng biến thiên là:',['4','5','6','10'],1,'R = 10 − 5 = 5.'),
+M('Cỡ mẫu n của bảng trên là:',['20','24','25','30'],2,'5+6+6+5+3 = 25.'),
+M('Số trung bình của mẫu số liệu ở bảng trên là:',['7,3','7,5','6,9','8,1'],0,'(5·5,5+6·6,5+6·7,5+5·8,5+3·9,5)/25 = 182,5/25 = 7,3.')]},
+{id:'l2',grp:'Nhóm 2 · Củng cố',title:'Mức 2 – Thông hiểu (4 đáp án, Đúng/Sai)',min:0,desc:'Tứ phân vị, đúng/sai thực tế',qs:[
+M('Mức lương khởi điểm (triệu đồng) ở hai khu vực:'+tC11+'Tứ phân vị thứ nhất Q₁ của khu vực A là:',['6,0','6,2','6,5','7,0'],1,'n=20, n/4=5 → nhóm [6;7): Q₁ = 6 + (5−4)/5·1 = 6,2.'),
+F('Quãng đường đi bộ mỗi ngày của bác Hương (km):'+tBH+'Xét các phát biểu:',['Khoảng biến thiên là 1,5','Khoảng tứ phân vị là 0,575','Phương sai là 0,36','Độ lệch chuẩn xấp xỉ 0,36'],[1,1,0,1],'Q₁=3,1; Q₃=3,675 ⇒ Δ<sub>Q</sub>=0,575. x̄=3,39; s²≈0,1314; s≈0,36.'),
+M('Với bảng ở câu 1, khoảng tứ phân vị của khu vực A là:',['1,95','2,05','2,25','3,20'],1,'Q₃ = 8 + (15−14)/4 = 8,25 ⇒ Δ<sub>Q</sub> = 8,25 − 6,2 = 2,05.')]},
+{id:'l3',grp:'Nhóm 2 · Củng cố',title:'Mức 3 – Vận dụng (trả lời ngắn, thực tiễn)',min:0,desc:'Tính phương sai, so sánh nhiệt độ',qs:[
+S('Với bảng mức lương ở Mức 1:'+tL+'Tính phương sai của mẫu số liệu ghép nhóm (làm tròn 2 chữ số thập phân).',1.68,'Σnᵢcᵢ²/n − x̄² = 54,97 − 7,3² = 1,68.'),
+S('Nhiệt độ không khí trung bình các tháng năm 2021:'+tHN+'Tính phương sai của mẫu số liệu của Hà Nội (làm tròn 2 chữ số thập phân).',20.75,'x̄ = 24,8; s² = 635,79 − 24,8² = 20,75.'),
+M('Theo bảng nhiệt độ ở câu trên, thành phố nào có nhiệt độ trung bình tháng đồng đều hơn?',['Hà Nội','Huế','Như nhau','Không so sánh được'],1,'s²(Huế) = 15,75 &lt; s²(Hà Nội) = 20,75 ⇒ s≈3,97 &lt; 4,56 ⇒ Huế đồng đều hơn.')]},
+{id:'d1',grp:'Nhóm 3 · Đề tổng hợp',title:'Đề 1',min:30,desc:'22 câu (12 TN · 4 Đ/S · 6 TLN) · 30 phút',qs:[
+M('Lượng nước tiêu thụ của các hộ gia đình trong một tháng:'+tNuoc+'Khoảng biến thiên (m³) là:',['12','15','18','21'],1,'18 − 3 = 15.'),
+M('Điểm kiểm tra Toán học kì II:'+tLop+'Theo độ lệch chuẩn, lớp nào có điểm ít phân tán hơn?',['Lớp 12A','Lớp 12B','Như nhau','Không xác định'],0,'s²(12A)≈1,44 &lt; s²(12B)≈2,54 ⇒ lớp 12A đồng đều hơn.'),
+M('Tổng giờ nắng tháng 9 tại Cà Mau:'+tCM+'Số trung bình của mẫu ghép nhóm là:',['122,8','124,1','126,5','128,0'],1,'(3·89+6·107+3·125+5·143+3·161)/20 = 124,1.'),
+M('Thời gian nghe nhạc liên tục của một loại pin:'+tPin+'Thời gian trung bình (giờ) là:',['6,15','6,25','6,35','6,45'],2,'254/40 = 6,35.'),
+F('Quãng đường lái xe mỗi ngày của một tài xế taxi:'+tTX+'Xét các phát biểu:',['Khoảng biến thiên là 100 km','Khoảng tứ phân vị xấp xỉ 31,67','Số trung bình xấp xỉ 101,27','Độ lệch chuẩn xấp xỉ 21,34'],[1,1,0,1],'Q₁=90; Q₃≈121,67 ⇒ Δ<sub>Q</sub>≈31,67. x̄≈106,67; s²≈455,56; s≈21,34.'),
+S('Với bảng điểm ở câu 2, tính phương sai điểm của lớp 12B (làm tròn 2 chữ số thập phân).',2.54,'x̄ ≈ 6,29; s² ≈ 42,10 − 39,56 = 2,54.'),
+S('Chiều cao 40 ngọn núi cao nhất Đông Nam Á:'+tNui+'Tính độ lệch chuẩn (mét), làm tròn đến hàng đơn vị.',590,'x̄=4537,5; s²≈348593,75; s≈590.',.6)]},
+{id:'d2',grp:'Nhóm 3 · Đề tổng hợp',title:'Đề 2',min:35,desc:'22 câu (12 TN · 4 Đ/S · 6 TLN) · 35 phút',qs:[
+M('Giá đóng cửa của hai cổ phiếu trong 50 phiên:'+tCP+'Hai cổ phiếu có giá trung bình gần bằng nhau. Cổ phiếu nào ít rủi ro hơn (phương sai nhỏ hơn)?',['Cổ phiếu A','Cổ phiếu B','Như nhau','Không kết luận được'],0,'s²(A)=7,5216 &lt; s²(B)=12,4096.'),
+M('Chiều cao cây hướng dương theo hai phương pháp chăm sóc:'+tHD+'Chiều cao trung bình của phương án A (cm) là:',['24,8','25','26','27,5'],1,'(6·5+8·15+12·25+8·35+6·45)/40 = 25.'),
+M('Giờ nắng tháng 6:'+tNT+'Số trung bình giờ nắng của Quy Nhơn là:',['242,5','248','253','260'],2,'(175+2·205+4·235+10·265+3·295)/20 = 253.'),
+M('Đường kính thân cây xoan đào:'+tXD+'Theo độ lệch chuẩn (s<sub>A</sub>≈2,32; s<sub>B</sub>≈2,70), địa điểm nào có đường kính đồng đều hơn?',['Địa điểm B','Như nhau','Không xác định','Địa điểm A'],3,'s<sub>A</sub> &lt; s<sub>B</sub> ⇒ A đồng đều hơn.'),
+F('Với bảng mức lương hai khu vực:'+tC11+'Xét các phát biểu:',['Khoảng biến thiên là 5','Khoảng tứ phân vị của khu vực A là 2,05','Phương sai của khu vực B là 1,2875','Khu vực B có mức lương đồng đều hơn khu vực A'],[1,1,1,1],'s²(A)=1,5875 &gt; s²(B)=1,2875 ⇒ B đồng đều hơn.'),
+S('Với bảng giờ nắng Cà Mau:'+tCM+'Tính độ lệch chuẩn, làm tròn đến hàng phần mười.',23.8,'s² = 566,19 ⇒ s ≈ 23,8.',.06),
+S('Với bảng lượng nước tiêu thụ:'+tNuoc+'Tính độ lệch chuẩn (m³), làm tròn 2 chữ số thập phân.',3.28,'s² ≈ 10,77 ⇒ s ≈ 3,28.')]},
+{id:'d3',grp:'Nhóm 3 · Đề tổng hợp',title:'Đề 3',min:40,desc:'22 câu (12 TN · 4 Đ/S · 6 TLN) · 40 phút',qs:[
+M('Lượng mưa tháng 8 tại Vũng Tàu (2002–2020):'+tMua+'Số trung bình ước lượng (mm) là:',['172,25','188,03','195,50','202,50'],1,'(147,5·10+202,5·5+257,5·3+312,5)/19 ≈ 188,03.'),
+M('Với bảng giờ nắng tháng 6:'+tNT+'Theo độ lệch chuẩn (Nha Trang ≈ 35,34; Quy Nhơn ≈ 30,59), nơi nào đồng đều hơn?',['Nha Trang','Quy Nhơn','Như nhau','Không xác định'],1,'30,59 &lt; 35,34.'),
+M('Nhiệt độ trung bình các tháng 2021:'+tHN+'Thành phố nào có nhiệt độ đồng đều hơn?',['Huế','Hà Nội','Như nhau','Không xác định'],0,'s(Huế)≈3,97 &lt; s(Hà Nội)≈4,56.'),
+M('Mức lương hai khu vực:'+tC11+'Tứ phân vị thứ ba Q₃ của khu vực A là:',['7,75','8,00','8,25','8,50'],2,'3n/4=15 → nhóm [8;9): 8 + (15−14)/4 = 8,25.'),
+F('Năng suất lúa của một số thửa ruộng:'+tLua+'Xét các phát biểu:',['Có 25 thửa ruộng được khảo sát','Khoảng biến thiên là 1,0 tấn/ha','Khoảng tứ phân vị là 0,4675','Số trung bình là 6,088'],[1,0,1,1],'R = 6,7 − 5,5 = 1,2. Q₁=5,8625; Q₃=6,33; x̄=6,088.'),
+S('Thời gian dùng pin của một số máy tính:'+tPM+'Tính độ lệch chuẩn (giờ), làm tròn 2 chữ số thập phân.',0.19,'s² = 11/300 ⇒ s ≈ 0,19.',.006),
+S('Chiều cao 200 cây keo 3 năm tuổi:'+tKeo+'Tính khoảng tứ phân vị (m), làm tròn 2 chữ số thập phân.',0.53,'Q₁≈9,057; Q₃≈9,591 ⇒ Δ<sub>Q</sub>≈0,53.',.006)]}
+];
+const F2=x=>(+x.toFixed(2)).toString().replace('.',',');
+const DS=[['Thời gian giải một bài toán thực tế (phút) của học sinh',5,5,[4,9,14,8,5]],['Chiều cao (cm) của học sinh nam lớp 12',150,5,[2,6,15,12,5]],['Số tiền ăn sáng (nghìn đồng) mỗi tuần của học sinh',40,20,[5,12,18,10,5]],['Quãng đường (km) từ nhà đến trường của học sinh',0,2,[10,14,9,5,2]],['Thời gian chờ xe buýt (phút) của hành khách',0,4,[12,18,10,6,4]],['Khối lượng (kg) lợn xuất chuồng ở một trang trại',80,10,[3,8,17,9,3]],['Lượng mưa (mm) tháng 7 tại các trạm quan trắc',100,50,[4,7,5,3,1]],['Số bước chân (nghìn) mỗi ngày của người đi bộ',4,2,[3,6,10,7,4]],['Tuổi thọ (nghìn giờ) của bóng đèn LED',8,1,[5,12,20,9,4]],['Điểm thi thử môn Toán của học sinh khối 12',5,1,[2,6,12,9,5]],['Số khách mỗi ngày của một quán cà phê',40,20,[6,10,9,3,2]],['Thời gian tự học (giờ) mỗi tuần của học sinh',0,4,[5,11,14,8,2]],['Nhiệt độ (°C) các ngày hè tại một thành phố',28,2,[3,8,10,6,3]],['Sản lượng sữa (lít/ngày) của đàn bò',10,4,[4,9,13,8,6]],['Doanh thu (triệu đồng) mỗi ngày của một cửa hàng',10,5,[4,8,12,9,7]]];
+const NM={mean:'Số trung bình của mẫu số liệu ghép nhóm',R:'Khoảng biến thiên',dq:'Khoảng tứ phân vị',s2:'Phương sai',s:'Độ lệch chuẩn',q1:'Tứ phân vị thứ nhất Q₁',q3:'Tứ phân vị thứ ba Q₃'};
+function st(g){const n=g.reduce((s,x)=>s+x[2],0),m=g.reduce((s,x)=>s+x[2]*(x[0]+x[1])/2,0)/n,v=g.reduce((s,x)=>s+x[2]*((x[0]+x[1])/2)**2,0)/n-m*m,q1=qf(g,n,.25),q3=qf(g,n,.75);return{n,mean:m,s2:v,s:Math.sqrt(v),R:g[g.length-1][1]-g[0][0],q1,q3,dq:q3-q1}}
+function bd(i,e){const[c,a0,w,f0]=DS[i%15],f=f0.map((_,k)=>f0[(k+e)%5]),g=f.map((x,k)=>[a0+k*w,a0+(k+1)*w,x]),s=st(g);return{c:c+' (số liệu minh họa):',g,s,tb:T(['Nhóm',...g.map(x=>`[${F2(x[0])};${F2(x[1])})`)],[['Tần số',...f]]),e:`n = ${s.n}; x̄ = ${F2(s.mean)}; R = ${F2(s.R)}; Q₁ = ${F2(s.q1)}; Q₃ = ${F2(s.q3)}; Δ<sub>Q</sub> = ${F2(s.dq)}; s² = ${F2(s.s2)}; s = ${F2(s.s)}.`}}
+const gm=(b,k,j,e)=>{const v=b.s[k],o=[.82,1.15,1.3].map(x=>F2(v*x)),p=(j+e)%4;o.splice(p,0,F2(v));return M(b.c+b.tb+NM[k]+' là:',o,p,b.e)};
+const gf=(b,p)=>{const s=b.s,v=[s.n,s.R,s.mean,s.s],a=[s.n+2,s.R*1.1,s.mean*1.1,s.s*1.2],x=i=>F2(p[i]?v[i]:a[i]);return F(b.c+b.tb+'Xét các phát biểu:',['Cỡ mẫu là '+x(0),'Khoảng biến thiên là '+x(1),'Số trung bình xấp xỉ '+x(2),'Độ lệch chuẩn xấp xỉ '+x(3)],p,b.e)};
+const gs=(b,k)=>S(b.c+b.tb+'Tính '+NM[k].toLowerCase()+' (làm tròn đến hàng phần trăm).',+b.s[k].toFixed(2),b.e,.006);
+SETS.filter(s=>/^d\d/.test(s.id)).forEach((d,e)=>{d.w=1;const K=['mean','R','dq','s2','s','q1','q3','mean'],P=[[1,1,0,1],[1,0,1,1],[0,1,1,1]],K2=['s','dq','s2','mean'];for(let j=0;j<8;j++)d.qs.push(gm(bd(e*5+j,e),K[(j+e)%8],j,e));for(let j=0;j<3;j++)d.qs.push(gf(bd(e*5+8+j,e),P[(j+e)%3]));for(let j=0;j<4;j++)d.qs.push(gs(bd(e*5+11+j,e),K2[(j+e)%4]));d.qs.sort((a,b)=>'mfs'.indexOf(a.t)-'mfs'.indexOf(b.t))});
+const TH=`
+<div class=card><h2>1. Mẫu số liệu ghép nhóm</h2><p>Số liệu được chia thành các nhóm [a<sub>i</sub>; a<sub>i+1</sub>) kèm tần số n<sub>i</sub>. Cỡ mẫu n = n₁+…+n<sub>k</sub>. <b>Giá trị đại diện</b> c<sub>i</sub> = (a<sub>i</sub>+a<sub>i+1</sub>)/2. Tần số tích lũy cf<sub>i</sub> = n₁+…+n<sub>i</sub>.</p>
+<div class=f>Số trung bình: x̄ = (n₁c₁ + … + n<sub>k</sub>c<sub>k</sub>) / n</div></div>
+<div class=card><h2>2. Khoảng biến thiên</h2><div class=f>R = a<sub>k+1</sub> − a₁ (đầu mút phải nhóm cuối − đầu mút trái nhóm đầu)</div></div>
+<div class=card><h2>3. Khoảng tứ phân vị</h2><p>Nhóm chứa Q<sub>i</sub> là nhóm đầu tiên có cf ≥ i·n/4 (i = 1; 3). Gọi nhóm đó là [u<sub>m</sub>; u<sub>m+1</sub>), tần số n<sub>m</sub>, cf trước nó là C:</p>
+<div class=f>Q<sub>i</sub> = u<sub>m</sub> + [(i·n/4 − C) / n<sub>m</sub>]·(u<sub>m+1</sub> − u<sub>m</sub>)<br>Δ<sub>Q</sub> = Q₃ − Q₁</div></div>
+<div class=card><h2>4. Phương sai &amp; độ lệch chuẩn</h2><div class=f>s² = (1/n)·Σ n<sub>i</sub>(c<sub>i</sub> − x̄)² = (1/n)·Σ n<sub>i</sub>c<sub>i</sub>² − x̄²<br>s = √s²</div>
+<p><b>So sánh độ phân tán:</b> R, Δ<sub>Q</sub>, s² hoặc s càng nhỏ ⇒ mẫu càng đồng đều. Ý nghĩa thực tiễn: ổn định nhiệt độ, độ rủi ro cổ phiếu, chất lượng sản phẩm…</p></div>
+<div class=card><h2>5. Ví dụ mẫu</h2>${tL}<p>n = 25; x̄ = 7,3; Σnᵢcᵢ²/n = 54,97 ⇒ s² = 54,97 − 53,29 = <b>1,68</b>; s ≈ 1,30. Q₁: n/4 = 6,25 → nhóm [6;7): Q₁ = 6 + (6,25−5)/6 ≈ 6,21.</p></div>
+<div class=card><h2>6. Máy tính nhanh</h2><p class=mut>Mỗi dòng: <code>đầu trái; đầu phải; tần số</code></p><textarea id=cal rows=6 style="width:100%">5;6;5
+6;7;6
+7;8;6
+8;9;5
+9;10;3</textarea><p><button class=b onclick=calc()>Tính</button></p><div id=cres></div></div>`;
+function qf(g,n,p){let c=0;for(const x of g){if(c+x[2]>=p*n&&x[2]>0)return x[0]+(p*n-c)/x[2]*(x[1]-x[0]);c+=x[2]}}
+function calc(){const g=$('#cal').value.split('\n').map(l=>l.split(/[;\s]+/).map(v=>parseFloat(v.replace(',','.')))).filter(a=>a.length>=3&&a.every(x=>!isNaN(x)));if(!g.length){$('#cres').textContent='Dữ liệu chưa hợp lệ.';return}
+const n=g.reduce((s,x)=>s+x[2],0),m=g.reduce((s,x)=>s+x[2]*(x[0]+x[1])/2,0)/n,v=g.reduce((s,x)=>s+x[2]*((x[0]+x[1])/2)**2,0)/n-m*m,q1=qf(g,n,.25),q3=qf(g,n,.75),f=x=>(+x.toFixed(4)).toString().replace('.',',');
+$('#cres').innerHTML=T(['n','x̄','R','Q₁','Q₃','Δ_Q','s²','s'],[[n,f(m),f(g[g.length-1][1]-g[0][0]),f(q1),f(q3),f(q3-q1),f(v),f(Math.sqrt(v))]])}
+// ===== lưu trữ =====
+let db=null,user=null,me={name:'',cls:'',uid:''},isT=false,rows=[];
+const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+me={...me,...ls.get('me',{})};
+function who(){$('#who').innerHTML=me.name?`👤 <b>${esc(me.name)}</b> · Lớp <b>${esc(me.cls)}</b> <button class="b g" onclick="editMe()">Đổi</button>`:`<b>Nhập thông tin để lưu điểm</b><div class=st><input id=nm placeholder="Họ và tên"><input id=cl placeholder="Lớp (vd 12A1)" size=10><button class=b onclick="saveMe()">Lưu</button></div>`}
+function saveMe(){const n=$('#nm').value.trim(),c=$('#cl').value.trim().toUpperCase();if(!n||!c)return alert('Vui lòng nhập đủ họ tên và lớp');me.name=n;me.cls=c;ls.set('me',me);who()}
+function editMe(){me.name='';who()}
+let tab='th',timer=null;
+function nav(){const t=[['th','📘 Kiến thức'],['pr','✍️ Luyện tập'],['kq','🏆 Kết quả của tôi']];if(isT)t.push(['gv','👩‍🏫 Giáo viên']);$('#nav').innerHTML=t.map(x=>`<button class="${tab==x[0]?'on':''}" onclick="go('${x[0]}')">${x[1]}</button>`).join('')}
+function go(t){tab=t;clearInterval(timer);nav();const v=$('#view');if(t=='th')v.innerHTML=TH;else if(t=='pr')menu();else if(t=='kq')mine();else dash()}
+function menu(){let last='',h='';for(const s of SETS){if(s.grp!=last){h+=`</div><h3>${s.grp}</h3><div class=grid>`;last=s.grp}const best=Math.max(0,...ls.get('h',[]).filter(x=>x.id==s.id).map(x=>x.sc));h+=`<div class="card set" onclick="start('${s.id}')"><b>${s.title}</b><br><span class=mut>${s.desc}</span><br><span class=tag>${s.min?'⏱ '+s.min+' phút':'Không giới hạn'}</span> ${best?`<span class=tag>Cao nhất: ${best}</span>`:''}</div>`}
+$('#view').innerHTML=h.slice(6)+'</div>'}
+let cur,t0,left;
+function start(id){if(!me.name)return alert('Hãy nhập họ tên và lớp ở phía trên trước khi làm bài.');cur=SETS.find(s=>s.id==id);t0=Date.now();left=cur.min*60;
+$('#view').innerHTML=`${cur.min?'<div id=timer><span>⏱ <span id=tm></span></span><span>'+cur.title+'</span></div>':''}<div class=card><h2>${cur.title}</h2><div id=qs>${cur.qs.map(qh).join('')}</div><p><button class=b id=sub onclick="submit()">Nộp bài</button> <button class="b g" onclick="go('pr')">Thoát</button></p><div id=res></div></div>`;
+if(cur.min){tick();timer=setInterval(()=>{left--;tick();if(left<=0)submit(true)},1000)}}
+function tick(){$('#tm').textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0')}
+function qh(q,i){let h=`<div class=q id=q${i}><b>Câu ${i+1}.</b> ${q.q}`;
+if(q.t=='m')h+=q.o.map((o,j)=>`<label><input type=radio name=q${i} value=${j}> <b>${'ABCD'[j]}.</b> ${o}</label>`).join('');
+if(q.t=='f')h+=q.s.map((s,j)=>`<div class=st><span class=s>${'abcd'[j]}) ${s}</span><label><input type=radio name=q${i}_${j} value=1> Đúng</label><label><input type=radio name=q${i}_${j} value=0> Sai</label></div>`).join('');
+if(q.t=='s')h+=`<div class=st><input name=q${i} inputmode=decimal placeholder="Đáp số" size=12></div>`;
+return h+'<div class=ex hidden></div></div>'}
+function submit(auto){if(!cur)return;clearInterval(timer);const c=cur;cur=null;let pts=0,ok=0;
+c.qs.forEach((q,i)=>{const d=$('#q'+i),ex=d.querySelector('.ex');let r=0,ans='';
+if(q.t=='m'){const x=d.querySelector(`input[name=q${i}]:checked`);r=x&&+x.value==q.a?1:0;ans='Đáp án: '+'ABCD'[q.a];d.querySelectorAll('label').forEach((l,j)=>{if(j==q.a)l.classList.add('ok');else if(l.querySelector('input').checked)l.classList.add('bad')})}
+if(q.t=='f'){let k=0;q.a.forEach((a,j)=>{const x=d.querySelector(`input[name=q${i}_${j}]:checked`);if(x&&+x.value==a)k++});r=c.w?[0,.1,.25,.5,1][k]:k/4;ans='Đáp án: '+q.a.map((a,j)=>'abcd'[j]+(a?'-Đ':'-S')).join(', ')+` (đúng ${k}/4)`}
+if(q.t=='s'){const v=parseFloat(d.querySelector('input').value.replace(',','.'));r=Math.abs(v-q.a)<=q.tol?1:0;ans='Đáp số: '+String(q.a).replace('.',',')}
+pts+=r*(c.w?{m:.25,f:1,s:.5}[q.t]:1);if(r==1)ok++;d.classList.add(r==1?'':'');ex.hidden=false;ex.innerHTML=(r==1?'✅ ':r>0?'🟡 ':'❌ ')+'<b>'+ans+'</b><br>'+q.e;d.querySelectorAll('input').forEach(x=>x.disabled=true)});
+const sc=Math.round(pts/(c.w?10:c.qs.length)*1000)/100,sec=Math.round((Date.now()-t0)/1000);$('#sub').hidden=true;
+const rec={id:c.id,title:c.title,cls:me.cls,name:me.name,sc,ok,tot:c.qs.length,sec,ts:Date.now()};
+const h=ls.get('h',[]);h.push(rec);ls.set('h',h);if(db){db.collection('results').add({...rec,uid:me.uid}).catch(()=>{})}
+$('#res').innerHTML=`<div class=card><div class=sc>${String(sc).replace('.',',')}/10</div>${auto?'<p>Hết giờ, bài đã được nộp tự động.</p>':''}<p>Đúng hoàn toàn ${ok}/${c.qs.length} câu · Thời gian ${Math.floor(sec/60)}p${sec%60}s ${db?'· Điểm đã gửi cho giáo viên':'· (lưu trên máy này)'}</p></div>`;$('#res').scrollIntoView({behavior:'smooth'})}
+function mine(){const h=ls.get('h',[]).slice().reverse();$('#view').innerHTML=`<div class=card><h2>Lịch sử làm bài</h2>`+(h.length?`<p>Số lần làm: <b>${h.length}</b> · Điểm trung bình: <b>${(h.reduce((s,x)=>s+x.sc,0)/h.length).toFixed(2).replace('.',',')}</b></p>`+T(['Bài','Điểm','Đúng','Thời gian','Ngày'],h.map(x=>[esc(x.title),x.sc,x.ok+'/'+x.tot,Math.floor(x.sec/60)+'p'+x.sec%60+'s',new Date(x.ts).toLocaleDateString('vi-VN')])):'<p class=mut>Chưa có bài nào.</p>')+'</div>'}
+function dash(){const cls=[...new Set(rows.map(r=>r.cls))].sort(),f=window.fc||'';const R=rows.filter(r=>!f||r.cls==f);
+const by={};R.forEach(r=>{const k=r.cls+'|'+r.name;(by[k]=by[k]||[]).push(r)});
+const avg=a=>a.reduce((s,x)=>s+x.sc,0)/a.length,fm=x=>x.toFixed(2).replace('.',',');
+const cs=cls.map(c=>{const a=rows.filter(r=>r.cls==c);return[esc(c),new Set(a.map(r=>r.name)).size,a.length,`<div class=bar style="width:${avg(a)*10}%"></div> ${fm(avg(a))}`]});
+const ss=Object.values(by).map(a=>[esc(a[0].name),esc(a[0].cls),a.length,fm(avg(a)),Math.max(...a.map(x=>x.sc)),esc(a[a.length-1].title)]).sort((x,y)=>parseFloat(y[3])-parseFloat(x[3]));
+$('#view').innerHTML=`<div class=card><h2>Thống kê của giáo viên</h2><p class=mut>${rows.length} bài nộp · cập nhật trực tiếp</p><h3>Theo lớp</h3>${cs.length?T(['Lớp','Số HS','Số bài','Điểm TB'],cs):'<p>Chưa có dữ liệu.</p>'}
+<h3>Theo học sinh</h3><select onchange="window.fc=this.value;dash()"><option value="">Tất cả lớp</option>${cls.map(c=>`<option ${c==f?'selected':''}>${esc(c)}</option>`).join('')}</select>${T(['Học sinh','Lớp','Số bài','ĐTB','Cao nhất','Bài gần nhất'],ss)}
+<h3>Bài làm mới nhất</h3>${T(['Thời gian','Học sinh','Lớp','Bài','Điểm'],R.slice().sort((a,b)=>b.ts-a.ts).slice(0,30).map(r=>[new Date(r.ts).toLocaleString('vi-VN'),esc(r.name),esc(r.cls),esc(r.title),r.sc]))}</div>`}
+who();nav();go('th');
+(async()=>{try{user=await claude.use('user');if(user){me.uid=await user.id();isT=user.canEdit()||user.isOwner()}
+db=await claude.use('db');if(db&&isT){db.collection('results').onSnapshot(s=>{rows=s.docs.map(d=>d.data());if(tab=='gv')dash()},()=>{})}}catch(e){}nav()})();
+</script></body></html>
